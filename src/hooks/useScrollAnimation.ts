@@ -26,16 +26,23 @@ export function useScrollAnimation(
     const element = elementRef.current;
     if (!element) return;
 
+    // Use a more generous rootMargin on mobile for better performance
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const adjustedRootMargin = isMobile ? "-50px" : rootMargin;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setTimeout(() => {
-              setIsVisible(true);
-              if (triggerOnce) {
-                observer.unobserve(entry.target);
-              }
-            }, delay);
+            // Use requestAnimationFrame for smoother animations on mobile
+            requestAnimationFrame(() => {
+              setTimeout(() => {
+                setIsVisible(true);
+                if (triggerOnce) {
+                  observer.unobserve(entry.target);
+                }
+              }, delay);
+            });
           } else if (!triggerOnce) {
             setIsVisible(false);
           }
@@ -43,7 +50,7 @@ export function useScrollAnimation(
       },
       {
         threshold,
-        rootMargin,
+        rootMargin: adjustedRootMargin,
       }
     );
 

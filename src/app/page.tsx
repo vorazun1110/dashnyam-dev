@@ -412,7 +412,7 @@ export default function Home() {
   const t = useMemo(() => copy[language], [language]);
 
   return (
-    <div className="min-h-screen bg-yellow-50 text-black relative overflow-hidden">
+    <div className="min-h-screen bg-yellow-50 text-black relative overflow-x-hidden">
       {/* Decorative geometric shapes */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-20 right-10 w-32 h-32 bg-yellow-300 border-4 border-black transform rotate-12 opacity-20"></div>
@@ -464,6 +464,13 @@ export default function Home() {
                 >
                   {t.hero.contactMe}
                 </button>
+                <a
+                  href="/api/resume"
+                  download="dashnyam-resume.pdf"
+                  className="rounded-lg bg-blue-300 border-2 border-black px-5 py-2 text-sm font-bold text-black transition-all shadow-[4px_4px_0_0_black] hover:bg-blue-400 hover:shadow-none hover:scale-105 cursor-pointer"
+                >
+                  Download Resume
+                </a>
               </div>
             </div>
             
