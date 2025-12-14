@@ -151,14 +151,16 @@ const resumeData = {
 
 export async function GET() {
   try {
-    const stream = await renderToStream(React.createElement(ResumePDF, { data: resumeData }));
+    // Render the PDF component using React.createElement
+    const pdfDocument = React.createElement(ResumePDF, { data: resumeData });
+    const stream = await renderToStream(pdfDocument as any);
     
-    const chunks: Uint8Array[] = [];
+    const chunks: (string | Buffer)[] = [];
     for await (const chunk of stream) {
       chunks.push(chunk);
     }
     
-    const buffer = Buffer.concat(chunks);
+    const buffer = Buffer.concat(chunks.map(chunk => typeof chunk === 'string' ? Buffer.from(chunk) : chunk));
     
     return new NextResponse(buffer, {
       headers: {
