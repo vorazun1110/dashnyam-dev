@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 
+// testing
 type Language = "en" | "mn";
 
 type TimelineItem = {
